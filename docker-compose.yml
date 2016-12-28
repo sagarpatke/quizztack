@@ -2,7 +2,7 @@ version: "2"
 services:
  quiz:
    image: quizart-ui:0.1.0
-   build: './quizztack-ui'
+   build: './web'
    expose:
      - 8081
    ports:
@@ -21,8 +21,8 @@ services:
       REDIS_HOSTNAME: 'redis'
       REDIS_PORT: 6379
       EXPRESS_PORT: 8081
- testing:
-   build: './quizztack-ui/server/gameManager'
+ gameManager:
+   build: './web/server/gameManager'
    image: test
    links:
      - redis
@@ -32,7 +32,7 @@ services:
      REDIS_HOSTNAME: "redis"
      REDIS_PORT: 6379
  cluegenerator:
-   build: './clueGenerator'
+   build: './clues-generator'
    image: clue_generator
    links:
      - redis
