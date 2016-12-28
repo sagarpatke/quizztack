@@ -1,0 +1,16 @@
+[submodule "clues-generator"]
+	path = clues-generator
+	url = git@github.com:stackroute/quizztack-clues-generator.git
+	branch = .
+[submodule "game-controller"]
+	path = game-controller
+	url = git@github.com:stackroute/quizztack-game-controller.git
+	branch = .
+[submodule "game-provisioner"]
+	path = game-provisioner
+	url = git@github.com:stackroute/quizztack-game-provisioner.git
+	branch = .
+[submodule "web"]
+	path = web
+	url = git@github.com:stackroute/quizztack-web.git
+	branch = .
