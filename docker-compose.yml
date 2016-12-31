@@ -21,16 +21,16 @@ services:
       REDIS_HOSTNAME: 'redis'
       REDIS_PORT: 6379
       EXPRESS_PORT: 8081
- gameManager:
-   build: './web/server/gameManager'
-   image: test
-   links:
-     - redis
-   depends_on:
-     - redis
-   environment:
-     REDIS_HOSTNAME: "redis"
-     REDIS_PORT: 6379
+ provisioner:
+    build: './game-provisioner'
+    image: game-provisioner
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOSTNAME: "redis"
+      REDIS_PORT: 6379
  cluegenerator:
    build: './clues-generator'
    image: clue_generator
@@ -39,7 +39,8 @@ services:
    depends_on:
      - redis
    environment:
-     REDIS_HOSTNAME: "redis"
+     NEO4j_DRIVER: 'bolt://neo4j'
+     REDIS_HOST: "redis"
      REDIS_PORT: 6379
  neo4j:
    image: neo4j
