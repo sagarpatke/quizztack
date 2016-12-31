@@ -49,7 +49,7 @@ services:
    volumes:
      - $HOME/neo4j/data:/data
  db:
-   image: mongo:3.0.14
+   image: khezen/mongo
    ports:
      - 27017:27017
  redis:
