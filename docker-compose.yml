@@ -38,6 +38,7 @@ services:
      - redis
    depends_on:
      - redis
+     - neo4j
    environment:
      NEO4j_DRIVER: 'bolt://neo4j'
      REDIS_HOST: "redis"
