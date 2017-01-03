@@ -18,7 +18,7 @@ services:
    environment:
       NEO4j_DRIVER: 'bolt://neo4j'
       MONGO_URL: 'mongodb://db/test'
-      REDIS_HOSTNAME: 'redis'
+      REDIS_HOST: '172.23.238.251'
       REDIS_PORT: 6379
       EXPRESS_PORT: 8081
  provisioner:
@@ -29,7 +29,7 @@ services:
     depends_on:
       - redis
     environment:
-      REDIS_HOSTNAME: "redis"
+      REDIS_HOST: "172.23.238.251"
       REDIS_PORT: 6379
  cluegenerator:
    build: './clues-generator'
