@@ -3,6 +3,7 @@ services:
  quiz:
    image: quizart-ui:0.1.0
    build: './web'
+   restart: always
    expose:
      - 8081
    ports:
@@ -14,6 +15,7 @@ services:
       EXPRESS_PORT: 8081
  gamecontroller:
     build: ./game-controller
+    restart: always
     image: game-controller
     environment:
       REDIS_HOST: "172.23.238.251"
@@ -21,6 +23,7 @@ services:
  provisioner:
     build: './game-provisioner'
     image: game-provisioner
+    restart: always
     environment:
       REDIS_HOST: "172.23.238.251"
       REDIS_PORT: 6379
@@ -28,7 +31,14 @@ services:
  cluegenerator:
    build: './clues-generator'
    image: clue_generator
+   restart: always
    environment:
      NEO4j_DRIVER: 'bolt://localhost'
      REDIS_HOST: "172.23.238.251"
      REDIS_PORT: 6379
+ cluegenerator:
+   build: './clues-generator'
+   image: clue_generator
+   restart: always
+   environment:
+     NEO4j_DRIVER: 'bolt://localhost'
