@@ -19,9 +19,19 @@ services:
    environment:
       NEO4j_DRIVER: 'bolt://neo4j'
       MONGO_URL: 'mongodb://db/test'
-      REDIS_HOST: '172.23.238.251'
+      REDIS_HOST: 'redis'
       REDIS_PORT: 6379
       EXPRESS_PORT: 8081
+ gamecontroller:
+    build: ./game-controller
+    image: game-controller
+    links:
+      - redis
+    depends_on:
+      - redis
+    environment:
+      REDIS_HOST: "redis"
+      REDIS_PORT: 6379
  provisioner:
     build: './game-provisioner'
     image: game-provisioner
