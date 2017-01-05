@@ -3,6 +3,7 @@ services:
  quiz:
    image: quizart-ui:0.1.0
    build: './web'
+   restart: always
    expose:
      - 8081
    ports:
@@ -24,16 +25,20 @@ services:
  provisioner:
     build: './game-provisioner'
     image: game-provisioner
+    restart: always
     links:
       - redis
     depends_on:
       - redis
+      - neo4j
     environment:
+      NEO4j_DRIVER: 'bolt://neo4j'
       REDIS_HOST: "172.23.238.251"
       REDIS_PORT: 6379
  cluegenerator:
    build: './clues-generator'
    image: clue_generator
+   restart: always
    links:
      - redis
    depends_on:
@@ -41,7 +46,7 @@ services:
      - neo4j
    environment:
      NEO4j_DRIVER: 'bolt://neo4j'
-     REDIS_HOST: "redis"
+     REDIS_HOST: "172.23.238.251"
      REDIS_PORT: 6379
  neo4j:
    image: neo4j
