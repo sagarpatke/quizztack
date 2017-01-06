@@ -8,37 +8,60 @@ services:
      - 8081
    ports:
      - 8081:8081
+   links:
+     - redis
+     - neo4j
+   depends_on:
+     - redis
+     - neo4j
    environment:
-      NEO4j_DRIVER: 'bolt://localhost'
-      REDIS_HOST: '172.23.238.251'
+      NEO4j_DRIVER: 'bolt://neo4j'
+      REDIS_HOST: 'redis'
       REDIS_PORT: 6379
       EXPRESS_PORT: 8081
- gamecontroller:
-    build: ./game-controller
-    restart: always
-    image: game-controller
-    environment:
-      REDIS_HOST: "172.23.238.251"
-      REDIS_PORT: 6379
  provisioner:
     build: './game-provisioner'
-    image: game-provisioner
     restart: always
+    image: game-provisioner
+    links:
+      - redis
+    depends_on:
+      - redis
     environment:
-      REDIS_HOST: "172.23.238.251"
+      REDIS_HOST: "redis"
       REDIS_PORT: 6379
-      NEO4j_DRIVER: "bolt://localhost"
+ controller:
+   build: './game-controller'
+   restart: always
+   image: game_controller
+   links:
+     - redis
+   depends_on:
+     - redis
+   environment:
+     REDIS_HOST: "redis"
+     REDIS_PORT: 6379    
  cluegenerator:
    build: './clues-generator'
-   image: clue_generator
    restart: always
+   image: clue_generator
+   links:
+     - redis
+   depends_on:
+     - redis
+     - neo4j
    environment:
-     NEO4j_DRIVER: 'bolt://localhost'
-     REDIS_HOST: "172.23.238.251"
+     NEO4j_DRIVER: 'bolt://neo4j'
+     REDIS_HOST: "redis"
      REDIS_PORT: 6379
- cluegenerator:
-   build: './clues-generator'
-   image: clue_generator
-   restart: always
-   environment:
-     NEO4j_DRIVER: 'bolt://localhost'
+ neo4j:
+   image: 172.23.238.253:5000/neo4j
+   ports:
+     - 7474:7474
+     - 7687:7687
+   volumes:
+     - $HOME/neo4j/data:/data
+ redis:
+   image: redis:3.0.7
+   ports:
+     - 6379:6379
