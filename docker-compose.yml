@@ -55,7 +55,7 @@ services:
      REDIS_HOST: "redis"
      REDIS_PORT: 6379
  neo4j:
-   image: 172.23.238.253:5000/neo4j
+   image: neo4j
    ports:
      - 7474:7474
      - 7687:7687
